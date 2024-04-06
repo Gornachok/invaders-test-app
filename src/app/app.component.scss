@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 95vh;
+
+  .centered-form {
+    display: flex;
+    width: 100%;
+    max-width: 600px; 
+    .converterInput {
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid;
+      border-radius: 16px;
+      height: 60px;
+      flex-grow: 1;
+      input {
+        border: none;
+        background: 0 0;
+        text-align: right;
+        font-size: large;
+        width: 70%;
+        &:focus-visible {
+          outline: none;
+        };
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+      select {
+        background: lightblue;
+        border: 3px solid white;
+        opacity: 1;
+        border-radius: 16px;
+        transition: opacity .15s;
+        padding: 0 8px;
+        &:hover {
+          opacity: 0.8;
+        }
+        &:focus-visible {
+          outline: none;
+        };
+      }
+    }
+  
+    .switchButton {
+      background: none;
+      border: none;
+      img {
+        width: 20px;
+      }
+      cursor: pointer;
+      &:active {
+        transform: scale(.96);
+      }
+    }
+  
+  }
+}
