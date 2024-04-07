@@ -1,20 +1,20 @@
-import { ISelectItem } from "../interfaces";
+import { ISelectItem } from '../interfaces';
 
 export const CURRENCY_OPTIONS: ISelectItem[] = [
   {
     value: 'RUB',
-    label: '₽ RUB'
+    label: '₽ RUB',
   },
   {
     value: 'USD',
-    label: '$ USD'
+    label: '$ USD',
   },
   {
     value: 'EUR',
-    label: '€ EUR'
+    label: '€ EUR',
   },
   {
     value: 'GBP',
-    label: '£ GBP'
+    label: '£ GBP',
   },
 ];

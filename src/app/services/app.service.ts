@@ -12,15 +12,22 @@ export class AppService {
    * @param firstCurrency первая валюта
    * @param secondCurrency вторая валюта
    */
-  getConversionRate(firstCurrency: string, secondCurrency: string): Observable<number | null> {
-    return this.http.get<{ conversion_rate: number }>(
-      `https://v6.exchangerate-api.com/v6/${environment.apiKey}/pair/${firstCurrency}/${secondCurrency}`
-    ).pipe(
-      map(({ conversion_rate }: { conversion_rate: number }) => conversion_rate),
-      catchError((err) => {
-        console.error('Ошибка при запросе ставок', err);
-        return of(null)
-      })
-    )
+  getConversionRate(
+    firstCurrency: string,
+    secondCurrency: string
+  ): Observable<number | null> {
+    return this.http
+      .get<{ conversion_rate: number }>(
+        `https://v6.exchangerate-api.com/v6/${environment.apiKey}/pair/${firstCurrency}/${secondCurrency}`
+      )
+      .pipe(
+        map(
+          ({ conversion_rate }: { conversion_rate: number }) => conversion_rate
+        ),
+        catchError((err) => {
+          console.error('Ошибка при запросе ставок', err);
+          return of(null);
+        })
+      );
   }
 }

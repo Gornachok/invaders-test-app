@@ -1,25 +1,33 @@
 <div class="container">
   <form [formGroup]="form" class="centered-form">
     <div class="converterInput">
-      <input type="number" placeholder="Введите сумму" formControlName="firstAmount">
+      <input
+        type="number"
+        placeholder="Введите сумму"
+        formControlName="firstAmount"
+      />
       <select formControlName="firstCurrency">
         @for (currency of currencyList; track currency.value) {
-          <option [value]="currency.value">
-            <span>{{ currency.label }}</span>
-          </option>
+        <option [value]="currency.value">
+          <span>{{ currency.label }}</span>
+        </option>
         }
       </select>
     </div>
     <button class="switchButton" (click)="swapCurrencies()">
-      <img src="/assets/arrows.svg" alt="arrows">
+      <img src="/assets/arrows.svg" alt="arrows" />
     </button>
     <div class="converterInput">
-      <input type="number" placeholder="Введите сумму" formControlName="secondAmount">
+      <input
+        type="number"
+        placeholder="Введите сумму"
+        formControlName="secondAmount"
+      />
       <select formControlName="secondCurrency">
         @for (currency of currencyList; track currency.value) {
-          <option [value]="currency.value">
-            <span>{{ currency.label }}</span>
-          </option>
+        <option [value]="currency.value">
+          <span>{{ currency.label }}</span>
+        </option>
         }
       </select>
     </div>

@@ -1,5 +1,5 @@
 /* Интерфейс опции селекта */
-export interface ISelectItem  {
+export interface ISelectItem {
   /* Значение селекта */
   value: string;
   /* Лэйбл */

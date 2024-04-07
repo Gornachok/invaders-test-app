@@ -1,6 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  inject,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { CURRENCY_OPTIONS, ICurrencyForm, ISelectItem } from './models';
 import { AppService } from './services';
@@ -21,7 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   providers: [AppService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   private readonly appService = inject(AppService);
@@ -31,12 +42,14 @@ export class AppComponent implements OnInit {
   private conversionRate?: number;
 
   /* Форма конвертера валют */
-  public readonly form: FormGroup<ICurrencyForm> = new FormGroup<ICurrencyForm>({
-    firstAmount: new FormControl(1),
-    secondAmount: new FormControl(null),
-    firstCurrency: new FormControl('RUB', { nonNullable: true }),
-    secondCurrency: new FormControl('USD', { nonNullable: true }),
-  })
+  public readonly form: FormGroup<ICurrencyForm> = new FormGroup<ICurrencyForm>(
+    {
+      firstAmount: new FormControl(1),
+      secondAmount: new FormControl(null),
+      firstCurrency: new FormControl('RUB', { nonNullable: true }),
+      secondCurrency: new FormControl('USD', { nonNullable: true }),
+    }
+  );
 
   /* Достуные для селекта валюты */
   public readonly currencyList: ISelectItem[] = CURRENCY_OPTIONS;
@@ -46,31 +59,46 @@ export class AppComponent implements OnInit {
 
     // Подписка на изменение селектов валют
     combineLatest([
-      controls.firstCurrency.valueChanges.pipe(startWith(controls.firstCurrency.value)),
-      controls.secondCurrency.valueChanges.pipe(startWith(controls.secondCurrency.value)),
-    ]).pipe(
-      // Запрос множителя
-      switchMap(([firstCurrency, secondCurrency]: [string, string]) =>
-        this.appService.getConversionRate(firstCurrency, secondCurrency)
+      controls.firstCurrency.valueChanges.pipe(
+        startWith(controls.firstCurrency.value)
       ),
-      filter(Boolean),
-      tap((value) => this.conversionRate = value),
-      takeUntilDestroyed(this.destroyRef)
-    )
+      controls.secondCurrency.valueChanges.pipe(
+        startWith(controls.secondCurrency.value)
+      ),
+    ])
+      .pipe(
+        // Запрос множителя
+        switchMap(([firstCurrency, secondCurrency]: [string, string]) =>
+          this.appService.getConversionRate(firstCurrency, secondCurrency)
+        ),
+        filter(Boolean),
+        tap((value) => (this.conversionRate = value)),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe(() => {
         const firstAmount = controls.firstAmount.value;
-        controls.secondAmount.patchValue(this.calculate(firstAmount), { emitEvent: false });
-      })
+        controls.secondAmount.patchValue(this.calculate(firstAmount), {
+          emitEvent: false,
+        });
+      });
 
     // Подписка на изменение инпута первой суммы
     controls.firstAmount.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((val) => controls.secondAmount.patchValue(this.calculate(val), { emitEvent: false }))
+      .subscribe((val) =>
+        controls.secondAmount.patchValue(this.calculate(val), {
+          emitEvent: false,
+        })
+      );
 
     // Подписка на изменение инпута второй суммы
     controls.secondAmount.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((val) => controls.firstAmount.patchValue(this.calculate(val, true), { emitEvent: false }))
+      .subscribe((val) =>
+        controls.firstAmount.patchValue(this.calculate(val, true), {
+          emitEvent: false,
+        })
+      );
   }
 
   /* Поменять выбранные валюты местами */
@@ -89,6 +117,10 @@ export class AppComponent implements OnInit {
    */
   calculate(value: number | null, reverseCalculate?: boolean): number | null {
     if (!this.conversionRate || value === null) return null;
-    return +(reverseCalculate ? (value / this.conversionRate) : (this.conversionRate * value)).toFixed(5);
+    return +(
+      reverseCalculate
+        ? value / this.conversionRate
+        : this.conversionRate * value
+    ).toFixed(5);
   }
 }
