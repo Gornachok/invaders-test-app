@@ -1,6 +1,6 @@
 import { FormControl } from '@angular/forms';
 
-/* Интерфейс опции селекта */
+/* Интерфейс формы конвертера валют */
 export interface ICurrencyForm {
   firstAmount: FormControl<number | null>;
   secondAmount: FormControl<number | null>;

@@ -24,7 +24,7 @@ export class AppService {
         map(
           ({ conversion_rate }: { conversion_rate: number }) => conversion_rate
         ),
-        catchError((err) => {
+        catchError((err: Error) => {
           console.error('Ошибка при запросе ставок', err);
           return of(null);
         })

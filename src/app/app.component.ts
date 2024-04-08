@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
     // Подписка на изменение инпута первой суммы
     controls.firstAmount.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((val) =>
+      .subscribe((val: number | null) =>
         controls.secondAmount.patchValue(this.calculate(val), {
           emitEvent: false,
         })
@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
     // Подписка на изменение инпута второй суммы
     controls.secondAmount.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((val) =>
+      .subscribe((val: number | null) =>
         controls.firstAmount.patchValue(this.calculate(val, true), {
           emitEvent: false,
         })
